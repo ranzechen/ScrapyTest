@@ -29,6 +29,6 @@ class ScrapytestPipeline(object):
             item['author'][0],
             item['title'][0],
             item['times'][0],
-            item['perUrl']
+            item['perUrl'][0]
             )
         )
