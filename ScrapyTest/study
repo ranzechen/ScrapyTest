@@ -1,3 +1,12 @@
+windows下安装Python3的scrapy:
+(1)下载Python3.5.2进行安装，安装时不要勾选安装pip，勾选自动加入环境变量和vs环境等
+(2)去官网下载pip并安装
+(3)然后安装scrapy如果报错找不到module，那就缺少哪个安装哪个(Python安装)
+(4)如果报错找不到pyapi32就去这里https://sourceforge.net/projects/pywin32/files/pywin32/Build%20220/下载对应的版本进行安装，即便安装过程中报错也不用管(点击安装)
+(6)如果报错 Microsoft Visual C++ 14.0 is required  就去这里http://www.lfd.uci.edu/~gohlke/pythonlibs/#wordcloud下载lxml‑3.7.3‑cp35‑cp35m‑win32.whl(一定要pip安装.whl(扩展包)结尾的都用pip安装)
+如果还报错就去上面的那个网址继续下载 numpy-1.13+mkl(点击安装)
+
+xpath使用技巧:
 表达式	    描述
 nodename	选取此节点的所有子节点。
 /	        从根节点选取。
@@ -11,9 +20,11 @@ nodename	选取此节点的所有子节点。
 @*	        匹配任何属性节点。
 node()	    匹配任何类型的节点
 
-scrapy常用命令
+scrapy常用命令:
 1.scrapy genspider -l                                                       --查看有哪些爬虫模板 {basic,crawl,csvfeed,xmlfeed}
          genspider -t 爬虫模板名称 爬取的网址                                 --根据某个爬虫模板创建某个网址的爬虫文件(进入到爬虫项目文件名称下)
          bench                                                              --测试爬虫环境
          check 爬虫名称                                                     --测试爬虫是否可用
          list                                                               --列出当前爬虫项目中有的爬虫
+
+
