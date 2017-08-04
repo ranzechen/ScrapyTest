@@ -22,7 +22,6 @@ MYSQL_PASSWD = '123456'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
-
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 
