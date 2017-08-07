@@ -20,8 +20,9 @@ MYSQL_PASSWD = '123456'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 
-# Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+# Obey robots.txt rules 爬虫协议
+#ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 
