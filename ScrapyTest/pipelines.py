@@ -4,10 +4,12 @@
 from twisted.enterprise import adbapi
 import pymysql
 import pymysql.cursors
+class ScrapyqichachaPipeline(object):
+    def process_item(self, item, spider):
+        return item
 
-class ScrapytestPipeline(object):
-
- # 数据库参数
+class ScrapytianyanchaPipeline(object):
+    # 数据库参数
     def __init__(self):
         dbargs = dict(
             host='168.33.222.97',
@@ -21,14 +23,29 @@ class ScrapytestPipeline(object):
         self.dbpool = adbapi.ConnectionPool('pymysql', **dbargs)
 
     def process_item(self, item, spider):
-        res = self.dbpool.runInteraction(self.insert_into_table, item)
+        #res = self.dbpool.runInteraction(self.insert_into_table, item)
+        print(item)
         return item
         # 插入的表，此表需要事先建好
+
     def insert_into_table(self, conn, item):
-        conn.execute('insert into jiexin_tieba(author,title,times) values(%s,%s,%s,%s)', (
-            item['author'][0],
-            item['title'][0],
-            item['times'][0],
-            item['perUrl'][0]
-            )
+        conn.execute('insert into tianyancha(name,email,phone,address,regalRepresentative,registeredCapital,registeredTime,registrationNumber,organizationCode,unifiedSocialCreditCode,companyType,taxpayerIdentificationNumber,industry,businessTerm,approvalDate,registrationAuthority,scopeOfBusiness) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)', (
+        item['name'],
+        item['email'],
+        item['phone'],
+        item['address'],
+        item['regalRepresentative'],
+        item['registeredCapital'],
+        item['registeredTime'],
+        item['registrationNumber'],
+        item['organizationCode'],
+        item['unifiedSocialCreditCode'],
+        item['companyType'],
+        item['taxpayerIdentificationNumber'],
+        item['industry'],
+        item['businessTerm'],
+        item['approvalDate'],
+        item['registrationAuthority'],
+        item['scopeOfBusiness']
         )
+                     )

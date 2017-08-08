@@ -19,16 +19,17 @@ MYSQL_USER = 'root'
 MYSQL_PASSWD = '123456'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-
+USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0'
 # Obey robots.txt rules 爬虫协议
 #ROBOTSTXT_OBEY = True
 ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 
-#ITEM_PIPELINES = {
-#    'ScrapyTest.pipelines.ScrapytestPipeline': 300
-#}
+ITEM_PIPELINES = {
+    #'ScrapyTest.pipelines.ScrapyqichachaPipeline':300
+    #'ScrapyTest.pipelines.ScrapytianyanchaPipeline': 300
+}
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -42,7 +43,7 @@ ROBOTSTXT_OBEY = False
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -61,9 +62,10 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'ScrapyTest.middlewares.MyCustomDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+    #'ScrapyTest.middlewares.MyCustomDownloaderMiddleware': 543,
+    'scrapy_crawlera.CrawleraMiddleware': 600
+}
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
