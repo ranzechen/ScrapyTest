@@ -18,17 +18,14 @@ MYSQL_DBNAME = 'scrapy'
 MYSQL_USER = 'root'
 MYSQL_PASSWD = '123456'
 
-# Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0'
-# Obey robots.txt rules 爬虫协议
-#ROBOTSTXT_OBEY = True
+USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36'
+
 ROBOTSTXT_OBEY = False
-# Configure item pipelines
-# See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 
 ITEM_PIPELINES = {
     #'ScrapyTest.pipelines.ScrapyqichachaPipeline':300
     #'ScrapyTest.pipelines.ScrapytianyanchaPipeline': 300
+    #'ScrapyTest.pipelines.ScrapyqiyePipeline':200
 }
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
@@ -37,7 +34,7 @@ ITEM_PIPELINES = {
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_TIMEOUT = 10
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -64,7 +61,11 @@ COOKIES_ENABLED = False
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     #'ScrapyTest.middlewares.MyCustomDownloaderMiddleware': 543,
-    'scrapy_crawlera.CrawleraMiddleware': 600
+    #'scrapy_crawlera.CrawleraMiddleware': 600
+    'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware': 350,
+    'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware': 351,
+    # put this middleware after RetryMiddleware
+    'ScrapyTest.HttpProxyMiddleware.HttpProxyMiddleware':999,
 }
 
 # Enable or disable extensions

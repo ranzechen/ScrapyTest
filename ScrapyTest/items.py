@@ -47,3 +47,18 @@ class ScrapytianyanchaItem(scrapy.Item):
     approvalDate = scrapy.Field()  # 核准日期
     registrationAuthority  = scrapy.Field()#登记机关
     scopeOfBusiness = scrapy.Field()#经营范围
+
+class ScrapyqiyeItem(scrapy.Item):
+    name = scrapy.Field()
+    address = scrapy.Field()
+    phone = scrapy.Field()
+    boss = scrapy.Field()
+    buiness = scrapy.Field()
+    license = scrapy.Field()
+    fazhengjiguan = scrapy.Field()
+    hezhunriqi = scrapy.Field()
+    jingyingzhuangtai = scrapy.Field()
+    chengliriqi = scrapy.Field()
+    zhuceziben = scrapy.Field()
+    suoshufenlei = scrapy.Field()
+    renqizhi = scrapy.Field()
