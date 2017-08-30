@@ -1,21 +1,20 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy.http import Request
-import urllib.request
-
+import logging
+logger = logging.getLogger(__name__)
 class TianyanchaSpider(scrapy.Spider):
     name = 'tianyancha'
     allowed_domains = ['tianyancha.com']
     start_urls = ['https://www.tianyancha.com/']
-    website_possible_httpstatus_list = [404]
 #根据start_urls获取每个地区的url，并拼出每个地区url的10页数据
     def parse(self, response):
         info = response.xpath("//div[@class='industry_container js-industry-container hidden bace_box']")
         hrefList = info.xpath("div/div/a[1]/@href").extract()
         for url in hrefList:
-            for i in range(1,21):#指定每个地区爬取的页数
+            for i in range(1, 200):  # 指定每个地区爬取的页数
                 link = url + "/p" + str(i)
-                yield Request(url=link,callback=self.companyLink)
+                yield Request(url=link, callback=self.companyLink,dont_filter=True)
 #获取到每一页的数据后获取每页中公司的url并yield返回请求每个公司的url
     def companyLink(self,response):
         for link in response.xpath("//div[@class='b-c-white search_result_container']/div/div/div/div/a/@href").extract():

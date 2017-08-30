@@ -50,15 +50,5 @@ class ScrapytianyanchaItem(scrapy.Item):
 
 class ScrapyqiyeItem(scrapy.Item):
     name = scrapy.Field()
-    address = scrapy.Field()
-    phone = scrapy.Field()
-    boss = scrapy.Field()
-    buiness = scrapy.Field()
-    license = scrapy.Field()
-    fazhengjiguan = scrapy.Field()
-    hezhunriqi = scrapy.Field()
-    jingyingzhuangtai = scrapy.Field()
-    chengliriqi = scrapy.Field()
-    zhuceziben = scrapy.Field()
-    suoshufenlei = scrapy.Field()
-    renqizhi = scrapy.Field()
+    info1 = scrapy.Field()
+    info2 = scrapy.Field()

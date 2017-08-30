@@ -1,23 +1,20 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
-import logging
 import urllib.request
-logger = logging.getLogger(__name__)
+import logging
 
+logger = logging.getLogger(__name__)
 
 def get_html(url):
     request = urllib.request.Request(url)
-    request.add_header("User-Agent",
-                       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.99 Safari/537.36")
+    request.add_header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.99 Safari/537.36")
     html = urllib.request.urlopen(request)
     return html.read()
-
 
 def get_soup(url):
     soup = BeautifulSoup(get_html(url), "lxml")
     return soup
-
 
 def fetch_kxdaili(page):
     """
@@ -34,24 +31,22 @@ def fetch_kxdaili(page):
             ip = tds[0].text
             port = tds[1].text
             latency = tds[4].text.split(" ")[0]
-            if float(latency) < 0.5:  # 输出延迟小于0.5秒的代理
+            if float(latency) < 0.5: # 输出延迟小于0.5秒的代理
                 proxy = "%s:%s" % (ip, port)
                 proxyes.append(proxy)
     except:
         logger.warning("fail to fetch from kxdaili")
     return proxyes
 
-
 def img2port(img_url):
     """
     mimvp.com的端口号用图片来显示, 本函数将图片url转为端口, 目前的临时性方法并不准确
     """
     code = img_url.split("=")[-1]
-    if code.find("AO0OO0O") > 0:
+    if code.find("AO0OO0O")>0:
         return 80
     else:
         return None
-
 
 def fetch_mimvp():
     """
@@ -98,7 +93,6 @@ def fetch_xici():
         logger.warning("fail to fetch from xici")
     return proxyes
 
-
 def fetch_ip181():
     """
     http://www.ip181.com/
@@ -119,7 +113,6 @@ def fetch_ip181():
     except Exception as e:
         logger.warning("fail to fetch from ip181: %s" % e)
     return proxyes
-
 
 def fetch_httpdaili():
     """
@@ -146,66 +139,41 @@ def fetch_httpdaili():
         logger.warning("fail to fetch from httpdaili: %s" % e)
     return proxyes
 
-
-def fetch_66ip():
-    """
-    http://www.66ip.cn/
-    每次打开此链接都能得到一批代理, 速度不保证
-    """
-    proxyes = []
-    try:
-        # 修改getnum大小可以一次获取不同数量的代理
-        url = "http://www.66ip.cn/nmtq.php?getnum=10&isp=0&anonymoustype=3&start=&ports=&export=&ipaddress=&area=1&proxytype=0&api=66ip"
-        content = get_html(url)
-        urls = content.split("</script>")[-1].split("<br />")
-        for u in urls:
-            if u.strip():
-                proxyes.append(u.strip())
-    except Exception as e:
-        logger.warning("fail to fetch from httpdaili: %s" % e)
-    return proxyes
-
-
 def check(proxy):
-    import urllib.request
     url = "http://www.baidu.com/js/bdsug.js?v=1.0.3.0"
     proxy_handler = urllib.request.ProxyHandler({'http': "http://" + proxy})
-    opener = urllib.request.build_opener(proxy_handler, urllib.request.HTTPHandler)
+    opener = urllib.request.build_opener(proxy_handler,urllib.request.HTTPHandler)
     try:
-        response = opener.open(url, timeout=3)
+        response = opener.open(url,timeout=3)
         return response.code == 200
     except Exception:
         return False
 
-
-def fetch_all(endpage=2):
+def fetch_all(endpage=3):
     proxyes = []
     for i in range(1, endpage):
         proxyes += fetch_kxdaili(i)
-        proxyes += fetch_mimvp()
-        proxyes += fetch_xici()
-        proxyes += fetch_ip181()
-        proxyes += fetch_httpdaili()
-        proxyes += fetch_66ip()
-        valid_proxyes = []
-        logger.info("checking proxyes validation")
+    proxyes += fetch_mimvp()
+    proxyes += fetch_xici()
+    proxyes += fetch_ip181()
+    proxyes += fetch_httpdaili()
+    valid_proxyes = []
+    logger.info("checking proxyes validation")
     for p in proxyes:
         if check(p):
             valid_proxyes.append(p)
     return valid_proxyes
 
-
 if __name__ == '__main__':
     import sys
-
     root_logger = logging.getLogger("")
     stream_handler = logging.StreamHandler(sys.stdout)
-    formatter = logging.Formatter('%(name)-8s %(asctime)s %(levelname)-8s %(message)s', '%a, %d %b %Y %H:%M:%S', )
+    formatter = logging.Formatter('%(name)-8s %(asctime)s %(levelname)-8s %(message)s', '%a, %d %b %Y %H:%M:%S',)
     stream_handler.setFormatter(formatter)
     root_logger.addHandler(stream_handler)
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
     proxyes = fetch_all()
-    # print check("202.29.238.242:3128")
+    #print check("202.29.238.242:3128")
     for p in proxyes:
         print(p)

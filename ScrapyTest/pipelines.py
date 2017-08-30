@@ -64,39 +64,4 @@ class ScrapytianyanchaPipeline(object):
         )
                      )
 
-class ScrapyqiyePipeline(object):
-    # 数据库参数
-    def __init__(self):
-        dbargs = dict(
-            host='168.33.222.97',
-            db='scrapy',
-            user='root',
-            passwd='123456',
-            cursorclass=pymysql.cursors.DictCursor,
-            charset='utf8',
-            use_unicode=True
-        )
-        self.dbpool = adbapi.ConnectionPool('pymysql', **dbargs)
-
-    def process_item(self, item, spider):
-        self.dbpool.runInteraction(self.insert_into_table, item)
-        return item
-        # 插入的表，此表需要事先建好
-
-    def insert_into_table(self, conn, item):
-        conn.execute('insert into shenzhenqiye(name,address,phone,boss,buiness,license,fazhengjiguan,hezhunriqi,jingyingzhuangtai,chengliriqi,zhuceziben,suoshufenlei,renqizhi) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(
-            item['name'],
-            item['address'],
-            item['phone'],
-            item['boss'],
-            item['buiness'],
-            item['license'],
-            item['fazhengjiguan'],
-            item['hezhunriqi'],
-            item['jingyingzhuangtai'],
-            item['chengliriqi'],
-            item['zhuceziben'],
-            item['suoshufenlei'],
-            item['renqizhi']
-        ))
 

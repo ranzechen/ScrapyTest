@@ -26,6 +26,7 @@ ITEM_PIPELINES = {
     #'ScrapyTest.pipelines.ScrapyqichachaPipeline':300
     #'ScrapyTest.pipelines.ScrapytianyanchaPipeline': 300
     #'ScrapyTest.pipelines.ScrapyqiyePipeline':200
+    #'ScrapyTest.pipelines.JsonPipeline':200
 }
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
@@ -63,9 +64,9 @@ DOWNLOADER_MIDDLEWARES = {
     #'ScrapyTest.middlewares.MyCustomDownloaderMiddleware': 543,
     #'scrapy_crawlera.CrawleraMiddleware': 600
     'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware': 350,
-    'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware': 351,
+    #'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware': 351,
     # put this middleware after RetryMiddleware
-    'ScrapyTest.HttpProxyMiddleware.HttpProxyMiddleware':999,
+    'ScrapyTest.HttpProxyMiddleware.HttpProxyMiddleware':543,
 }
 
 # Enable or disable extensions

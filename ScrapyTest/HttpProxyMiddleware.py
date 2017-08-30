@@ -21,7 +21,7 @@ class HttpProxyMiddleware(object):
         # 一个proxy如果没用到这个数字就被发现老是超时, 则永久移除该proxy. 设为0则不会修改代理文件.
         self.dump_count_threshold = 20
         # 存放代理列表的文件, 每行一个代理, 格式为ip:port, 注意没有http://, 而且这个文件会被修改, 注意备份
-        self.proxy_file = "proxyes.txt"
+        self.proxy_file = "proxyes.dat"
         # 是否在超时的情况下禁用代理
         self.invalid_proxy_flag = True
         # 当有效代理小于这个数时(包括直连), 从网上抓取新的代理, 可以将这个数设为为了满足每个ip被要求输入验证码后得到足够休息时间所需要的代理数
@@ -41,16 +41,14 @@ class HttpProxyMiddleware(object):
         # 一个将被设为invalid的代理如果已经成功爬取大于这个参数的页面， 将不会被invalid
         self.invalid_proxy_threshold = 200
         # 从文件读取初始代理
-
         if os.path.exists(self.proxy_file):
-	        with open(self.proxy_file, "r") as fd:
-		        lines = fd.readlines()
-		        for line in lines:
-		            line = line.strip()
-		            if not line or self.url_in_proxyes("http://" + line):
-			            continue
-		            self.proxyes.append({"proxy": "http://"  + line,"valid": True,"count": 0})
-
+            with open(self.proxy_file, "r") as fd:
+                lines = fd.readlines()
+                for line in lines:
+                    line = line.strip()
+                    if not line or self.url_in_proxyes("http://" + line):
+                        continue
+                    self.proxyes.append({"proxy": "http://" + line, "valid": True, "count": 0})
     @classmethod
     def from_crawler(cls, crawler):
         return cls(crawler.settings)
@@ -158,7 +156,7 @@ class HttpProxyMiddleware(object):
         并调整当前proxy_index到下一个有效代理的位置
         """
         if index < self.fixed_proxy: # 可信代理永远不会设为invalid
-    	    self.inc_proxy_index()
+	        self.inc_proxy_index()
         return
 
         if self.proxyes[index]["valid"]:
@@ -212,8 +210,7 @@ class HttpProxyMiddleware(object):
         # status不是正常的200而且不在spider声明的正常爬取过程中可能出现的
         # status列表中, 则认为代理无效, 切换代理
         if response.status != 200 \
-                and (not hasattr(spider, "website_possible_httpstatus_list") \
-                             or response.status not in spider.website_possible_httpstatus_list):
+                and (not hasattr(spider, "website_possible_httpstatus_list") or response.status not in spider.website_possible_httpstatus_list):
             logger.info("response status not in spider.website_possible_httpstatus_list")
             self.invalid_proxy(request.meta["proxy_index"])
             new_request = request.copy()
@@ -242,3 +239,4 @@ class HttpProxyMiddleware(object):
             new_request = request.copy()
             new_request.dont_filter = True
             return new_request
+
