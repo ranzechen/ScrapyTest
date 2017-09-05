@@ -1,11 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import os
 import logging
+import os
 from datetime import datetime, timedelta
-from twisted.web._newclient import ResponseNeverReceived
+
 from twisted.internet.error import TimeoutError, ConnectionRefusedError, ConnectError
-from ScrapyTest import fetch_free_proxyes
+from twisted.web._newclient import ResponseNeverReceived
+
+from fetch_proxyes_one import fetch_free_proxyes
 
 logger = logging.getLogger(__name__)
 

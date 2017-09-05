@@ -66,9 +66,9 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware': 350,
     #'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware': 351,
     # put this middleware after RetryMiddleware
-    'ScrapyTest.HttpProxyMiddleware.HttpProxyMiddleware':543,
+    #'fetch_proxyes_one.HttpProxyMiddleware.HttpProxyMiddleware':543,
+    'fetch_proxyes_two.HtmlDownloader.Html_Downloader':543,
 }
-
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
